@@ -25,7 +25,7 @@ void curve25519_secret_key(sk)
         unsigned char *csk;
     PPCODE:
     {
-        csk = SvPV(sk, l);
+        csk = (unsigned char *) SvPV(sk, l);
 
         if ( l != 32 ) croak("Secret key requires 32 bytes");
 
@@ -34,7 +34,7 @@ void curve25519_secret_key(sk)
         masked[31] &= 127;
         masked[31] |= 64;
 
-        mXPUSHp(masked, 32);
+        mXPUSHp((char *) masked, 32);
     }
 
 void curve25519(sk, ...)
@@ -50,7 +50,7 @@ void curve25519(sk, ...)
         unsigned char *csk;
     PPCODE:
     {
-        csk = SvPV(sk, l);
+        csk = (unsigned char *) SvPV(sk, l);
 
         if ( l != 32 ) croak("Secret key requires 32 bytes");
 
@@ -65,7 +65,7 @@ void curve25519(sk, ...)
          */
         if ( ix == 2 || items == 2 ) {
 
-            bp = SvPV(ST(1), l);
+            bp = (unsigned char *) SvPV(ST(1), l);
 
             if ( l != 32 ) {
                 if ( ix == 2 ) croak("Public key requires 32 bytes");
@@ -77,6 +77,6 @@ void curve25519(sk, ...)
 
         curve25519_donna(OUT, csk, bp);
 
-        mXPUSHp(OUT, 32);
+        mXPUSHp((char *) OUT, 32);
     }
 

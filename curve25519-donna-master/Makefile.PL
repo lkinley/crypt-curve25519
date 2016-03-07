@@ -3,7 +3,7 @@ $Verbose = 1;
 use Config;
 
 my $extlib = $Config{archname} =~ /(?:amd64|x86_64)/ ? 'curve25519-donna-c64' : 'curve25519-donna';
-my $extflags = $Config{archname} =~ /(?:amd64|x86_64)/ ? '' : '-m32';
+my $extflags = $Config{archname} =~ /(?:amd64|x86_64|darwin)/ ? '' : '-m32';
 
 WriteMakefile(
         NAME   => 'Crypt::Curve25519::curve25519donna',
